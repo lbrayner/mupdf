@@ -1417,13 +1417,10 @@ static void do_app(void)
 		case 'g': jump_to_page(number - 1); break;
 		case 'G': jump_to_location(fz_last_page(ctx, doc)); break;
 
-        case KEY_HOME:
-            scroll_y = 0;
-            break;
-
-        case KEY_END:
-            scroll_y = page_tex.h - canvas_h;
-            break;
+        case 'u': scroll_y -= canvas_h; break;
+        case 'd': scroll_y += canvas_h; break;
+        case KEY_HOME: scroll_y = 0; break;
+        case KEY_END: scroll_y = page_tex.h - canvas_h; break;
 
         case KEY_PAGE_UP:
             scroll_y = 0;
