@@ -1407,22 +1407,37 @@ static void do_app(void)
 		case '-': set_zoom(zoom_out(currentzoom), ui.x, ui.y); break;
 		case '[': currentrotate -= 90; break;
 		case ']': currentrotate += 90; break;
-		case 'k': case KEY_UP: scroll_y -= 10; break;
-		case 'j': case KEY_DOWN: scroll_y += 10; break;
-		case 'h': case KEY_LEFT: scroll_x -= 10; break;
-		case 'l': case KEY_RIGHT: scroll_x += 10; break;
+		case 'k': case KEY_UP: scroll_y -= 20; break;
+		case 'j': case KEY_DOWN: scroll_y += 20; break;
+		case 'h': case KEY_LEFT: scroll_x -= 20; break;
+		case 'l': case KEY_RIGHT: scroll_x += 20; break;
 
 		case 'b': number = fz_maxi(number, 1); while (number--) smart_move_backward(); break;
 		case ' ': number = fz_maxi(number, 1); while (number--) smart_move_forward(); break;
 		case 'g': jump_to_page(number - 1); break;
 		case 'G': jump_to_location(fz_last_page(ctx, doc)); break;
 
-		case ',': case KEY_PAGE_UP:
+        case KEY_HOME:
+            scroll_y = 0;
+            break;
+
+        case KEY_END:
+            scroll_y = page_tex.h - canvas_h;
+            break;
+
+        case KEY_PAGE_UP:
+            scroll_y = 0;
+            // fallsthrough
+		case ',':
 			number = fz_maxi(number, 1);
 			while (number--)
 				currentpage = fz_previous_page(ctx, doc, currentpage);
 			break;
-		case '.': case KEY_PAGE_DOWN:
+
+        case KEY_PAGE_DOWN:
+            scroll_y = 0;
+            // fallsthrough
+		case '.':
 			number = fz_maxi(number, 1);
 			while (number--)
 				currentpage = fz_next_page(ctx, doc, currentpage);
