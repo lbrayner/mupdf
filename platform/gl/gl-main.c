@@ -1377,6 +1377,8 @@ static void do_app(void)
 
 	if (!ui.focus && ui.key && ui.plain)
 	{
+        int oldpagenr;
+
 		switch (ui.key)
 		{
 		case KEY_ESCAPE: clear_search(); selected_annot = NULL; break;
@@ -1432,8 +1434,13 @@ static void do_app(void)
 			break;
 
         case KEY_PAGE_DOWN:
-            scroll_y = 0;
-            // fallsthrough
+            oldpagenr = currentpage.page;
+			number = fz_maxi(number, 1);
+			while (number--)
+				currentpage = fz_next_page(ctx, doc, currentpage);
+            if(oldpagenr != currentpage.page)
+                scroll_y = 0;
+			break;
 		case '.':
 			number = fz_maxi(number, 1);
 			while (number--)
