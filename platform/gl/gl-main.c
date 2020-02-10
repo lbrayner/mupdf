@@ -1416,8 +1416,14 @@ static void do_app(void)
 
 		case 'b': number = fz_maxi(number, 1); while (number--) smart_move_backward(); break;
 		case ' ': number = fz_maxi(number, 1); while (number--) smart_move_forward(); break;
-		case 'g': jump_to_page(number - 1); break;
-		case 'G': jump_to_location(fz_last_page(ctx, doc)); break;
+		case 'g': scroll_y = 0; jump_to_page(number - 1); break;
+		case 'G':
+            if(!is_last_page(currentpage))
+            {
+                scroll_y = 0;
+                jump_to_location(fz_last_page(ctx, doc));
+            }
+            break;
 
         case 'u': scroll_y -= canvas_h; break;
         case 'd': scroll_y += canvas_h; break;
