@@ -1414,7 +1414,9 @@ static void do_app(void)
 		case 'h': case KEY_LEFT: scroll_x -= 20; break;
 		case 'l': case KEY_RIGHT: scroll_x += 20; break;
 
-		case 'b': number = fz_maxi(number, 1); while (number--) smart_move_backward(); break;
+        case KEY_BACKSPACE:
+		case 'b':
+            number = fz_maxi(number, 1); while (number--) smart_move_backward(); break;
 		case ' ': number = fz_maxi(number, 1); while (number--) smart_move_forward(); break;
 		case 'g': scroll_y = 0; jump_to_page(number - 1); break;
 		case 'G':
